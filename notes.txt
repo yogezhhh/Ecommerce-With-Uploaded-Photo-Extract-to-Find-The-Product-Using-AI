@@ -1,0 +1,6 @@
+pip install django pillow
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install transformers
+pip install ultralytics
+pip install faiss-cpu
+pip install numpy
