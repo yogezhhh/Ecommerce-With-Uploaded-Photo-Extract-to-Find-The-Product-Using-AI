@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<section class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+  <h1 class="text-5xl font-bold mb-12">All Products</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for product in products %}
+      {% include 'shop/partials/product_card.html' with product=product %}
+    {% empty %}
+      <p class="text-white/40">No products yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

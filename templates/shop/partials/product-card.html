@@ -1,0 +1,18 @@
+<div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-purple-500/50 transition tilt-card">
+  <div class="aspect-square rounded-xl overflow-hidden bg-white/5 mb-3">
+    {% if product.image %}
+      <img src="{{ product.image.url }}" class="w-full h-full object-cover">
+    {% else %}
+      <div class="w-full h-full flex items-center justify-center text-white/20 text-5xl">📦</div>
+    {% endif %}
+  </div>
+  <div class="flex justify-between items-start">
+    <div>
+      <a href="{% url 'product-detail' product.pk %}" class="font-semibold text-sm hover:text-cyan-400">
+        {{ product.name }}
+      </a>
+      <p class="text-white/40 text-xs mt-1">{{ product.category }}</p>
+    </div>
+    <div class="text-cyan-400 font-bold text-sm">${{ product.price }}</div>
+  </div>
+</div>

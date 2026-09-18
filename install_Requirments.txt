@@ -1,0 +1,10 @@
+mkdir nova && cd nova
+python -m venv venv
+source venv/bin/activate           # Windows: venv\Scripts\activate
+
+pip install django pillow python-decouple
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install transformers ultralytics faiss-cpu numpy
+pip install djangorestframework
+
+pip freeze > requirements.txt

@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <canvas id="hero-3d" class="absolute inset-0 z-0"></canvas>
+
+  <div class="relative z-10 text-center px-6 max-w-4xl">
+    <h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight">
+      Shop the <span class="bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">Future</span>.
+    </h1>
+    <p class="text-white/60 text-lg mb-10">
+      Point your camera. Find any product. Powered by AI.
+    </p>
+    <div class="flex gap-4 justify-center">
+      <a href="/products/" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 font-semibold hover:scale-105 transition">Shop Now</a>
+      <a href="/lens/" class="px-8 py-3 rounded-full bg-white/5 border border-white/10 font-semibold hover:bg-white/10 transition">Try Visual Search</a>
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6 max-w-7xl mx-auto">
+  <h2 class="text-4xl font-bold mb-12">Featured Products</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for product in featured_products %}
+      {% include 'shop/partials/product_card.html' with product=product %}
+    {% empty %}
+      <p class="text-white/40 col-span-4">
+        No products yet — add some in <a href="/admin/" class="text-cyan-400 underline">admin</a>.
+      </p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/three-hero.js' %}"></script>
+{% endblock %}

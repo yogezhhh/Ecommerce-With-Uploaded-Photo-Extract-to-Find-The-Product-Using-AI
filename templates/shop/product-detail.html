@@ -1,0 +1,20 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<section class="pt-32 pb-24 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+  <div class="aspect-square rounded-3xl overflow-hidden bg-white/5">
+    {% if product.image %}
+      <img src="{{ product.image.url }}" class="w-full h-full object-cover">
+    {% endif %}
+  </div>
+  <div>
+    <p class="text-cyan-400 text-sm mb-2">{{ product.category }}</p>
+    <h1 class="text-4xl font-bold mb-4">{{ product.name }}</h1>
+    <p class="text-3xl text-cyan-400 font-bold mb-6">${{ product.price }}</p>
+    <p class="text-white/60 mb-8">{{ product.description }}</p>
+    <button class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 font-semibold">
+      Add to Cart
+    </button>
+  </div>
+</section>
+{% endblock %}

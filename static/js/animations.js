@@ -1,0 +1,1 @@
+// Placeholder for GSAP scroll animations — safe to keep empty for now
