@@ -11,6 +11,6 @@ def generate_embedding(sender, instance, created, **kwargs):
         try:
             img = Image.open(instance.image.path).convert("RGB")
             instance.embedding = embed_image(img).tobytes()
-            instance.save(update_fields=['embedding'])
+            Product.objects.filter(pk=instance.pk).update(embedding=instance.embedding)
         except Exception as e:
-            print(f"Embedding failed for {instance.name}: {e}")
+            print(f"[embedding] failed for {instance.name}: {e}")

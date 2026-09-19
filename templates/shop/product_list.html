@@ -2,12 +2,36 @@
 
 {% block content %}
 <section class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
-  <h1 class="text-5xl font-bold mb-12">All Products</h1>
+  <div class="mb-10">
+    <div class="text-cyan-400 text-sm mb-2">/ SHOP</div>
+    <h1 class="text-5xl font-bold font-[Space_Grotesk]">All Products</h1>
+  </div>
+
+  <form method="get" class="glass rounded-2xl p-4 mb-10 flex flex-wrap gap-3 items-center">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search products..."
+           class="field flex-1 min-w-[200px]">
+
+    <select name="category" class="field max-w-[180px]">
+      <option value="">All categories</option>
+      {% for c in categories %}
+        <option value="{{ c.slug }}" {% if c.slug == active_cat %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="sort" class="field max-w-[180px]">
+      <option value="">Newest</option>
+      <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Price ↑</option>
+      <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Price ↓</option>
+    </select>
+
+    <button class="btn-primary text-sm">Filter</button>
+  </form>
+
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     {% for product in products %}
       {% include 'shop/partials/product_card.html' with product=product %}
     {% empty %}
-      <p class="text-white/40">No products yet.</p>
+      <p class="text-white/40 col-span-4">No products found.</p>
     {% endfor %}
   </div>
 </section>

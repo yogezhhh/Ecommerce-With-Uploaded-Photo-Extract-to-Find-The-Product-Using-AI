@@ -1,13 +1,64 @@
-<nav class="fixed top-0 inset-x-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">NOVA</a>
+<nav x-data="{ open:false, scrolled:false, cart:{{ cart_count|default:0 }} }"
+     @scroll.window="scrolled = window.scrollY > 30"
+     :class="scrolled ? 'glass' : ''"
+     class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
 
-    <div class="hidden md:flex gap-8 text-sm text-white/70">
-      <a href="/" class="hover:text-white">Home</a>
-      <a href="/products/" class="hover:text-white">Shop</a>
-      <a href="/lens/" class="hover:text-white text-cyan-400">Visual Search</a>
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="text-2xl font-bold font-[Space_Grotesk] grad-text">NOVA</a>
+
+    <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      <a href="/" class="hover:text-white transition">Home</a>
+      <a href="/products/" class="hover:text-white transition">Shop</a>
+      <a href="/lens/" class="hover:text-white transition flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        Visual Search
+      </a>
+      {% if user.is_authenticated %}
+        <a href="/orders/" class="hover:text-white transition">Orders</a>
+      {% endif %}
     </div>
 
-    <a href="/admin/" class="text-xs text-white/40 hover:text-white">Admin</a>
+    <div class="flex items-center gap-3">
+      <a href="/lens/?q=" class="hidden sm:flex items-center gap-2 glass px-4 py-2 rounded-full text-xs text-white/60 hover:text-white transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+        </svg>
+        Search
+      </a>
+
+      <a href="/cart/" class="relative p-2 rounded-full hover:bg-white/10 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <span x-text="cart" x-show="cart > 0"
+              class="absolute -top-1 -right-1 bg-purple-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center"></span>
+      </a>
+
+      {% if user.is_authenticated %}
+        <a href="/logout/" class="hidden md:inline text-xs text-white/60 hover:text-white">Logout</a>
+      {% else %}
+        <a href="/login/" class="hidden md:inline text-xs text-white/60 hover:text-white">Login</a>
+      {% endif %}
+
+      <button @click="open = !open" class="md:hidden p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div x-show="open" x-transition class="md:hidden glass mx-4 mb-4 rounded-2xl p-4 space-y-3 text-sm">
+    <a href="/" class="block">Home</a>
+    <a href="/products/" class="block">Shop</a>
+    <a href="/lens/" class="block text-cyan-400">Visual Search 🔍</a>
+    <a href="/cart/" class="block">Cart</a>
+    {% if user.is_authenticated %}
+      <a href="/orders/" class="block">Orders</a>
+      <a href="/logout/" class="block text-white/40">Logout</a>
+    {% else %}
+      <a href="/login/" class="block">Login</a>
+    {% endif %}
   </div>
 </nav>

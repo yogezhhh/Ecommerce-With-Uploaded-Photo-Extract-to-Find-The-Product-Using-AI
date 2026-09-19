@@ -1,2 +1,70 @@
-.tilt-card { transition: transform .3s ease, border-color .3s ease; }
-.tilt-card:hover { transform: translateY(-6px); }
+body {
+  background:
+    radial-gradient(1200px 600px at 20% 0%, #1a1030 0%, transparent 60%),
+    radial-gradient(1000px 500px at 90% 20%, #062f3a 0%, transparent 55%),
+    #0a0a0f;
+}
+
+.glass {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+}
+
+.grad-text {
+  background: linear-gradient(90deg,#7c3aed,#06b6d4,#f5c518);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg,#7c3aed,#06b6d4);
+  padding: .85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  display: inline-block;
+  transition: transform .2s, box-shadow .3s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 40px -10px rgba(124,58,237,.7); }
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .3s;
+  will-change: transform;
+}
+.tilt-card:hover { border-color: rgba(124,58,237,.55); }
+
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .8s;
+}
+.shine:hover::after { transform: translateX(100%); }
+
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee { animation: marquee 25s linear infinite; }
+
+@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.floaty { animation: floaty 4s ease-in-out infinite; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 10px; }
+
+/* input fields */
+.field {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  color: #fff;
+  outline: none;
+  transition: border-color .2s;
+}
+.field:focus { border-color: #06b6d4; }

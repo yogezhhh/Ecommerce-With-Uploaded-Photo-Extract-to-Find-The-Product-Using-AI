@@ -1,20 +1,50 @@
 {% extends 'shop/base.html' %}
 
 {% block content %}
-<section class="pt-32 pb-24 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-  <div class="aspect-square rounded-3xl overflow-hidden bg-white/5">
+<section class="pt-32 pb-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+  <div class="aspect-square rounded-3xl overflow-hidden bg-white/5 glass">
     {% if product.image %}
       <img src="{{ product.image.url }}" class="w-full h-full object-cover">
     {% endif %}
   </div>
+
   <div>
-    <p class="text-cyan-400 text-sm mb-2">{{ product.category }}</p>
-    <h1 class="text-4xl font-bold mb-4">{{ product.name }}</h1>
-    <p class="text-3xl text-cyan-400 font-bold mb-6">${{ product.price }}</p>
-    <p class="text-white/60 mb-8">{{ product.description }}</p>
-    <button class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 font-semibold">
-      Add to Cart
-    </button>
+    <p class="text-cyan-400 text-sm mb-2">{{ product.category.name|default:"" }}</p>
+    <h1 class="text-4xl md:text-5xl font-bold font-[Space_Grotesk] mb-4">{{ product.name }}</h1>
+
+    <div class="flex items-end gap-3 mb-6">
+      <span class="text-3xl text-cyan-400 font-bold">${{ product.price }}</span>
+      {% if product.compare_price and product.compare_price > product.price %}
+        <span class="text-white/40 line-through">${{ product.compare_price }}</span>
+      {% endif %}
+    </div>
+
+    <p class="text-white/60 mb-8 leading-relaxed">{{ product.description|default:"No description yet." }}</p>
+
+    <form method="post" action="{% url 'cart-add' product.id %}" class="flex items-center gap-3 mb-4">
+      {% csrf_token %}
+      <input type="number" name="qty" value="1" min="1" class="field w-20 text-center">
+      <button class="btn-primary flex-1">Add to Cart</button>
+    </form>
+
+    <a href="/lens/" class="text-sm text-cyan-400 hover:underline">🔍 Find similar with Lens</a>
+
+    <div class="grid grid-cols-3 gap-4 mt-10 text-xs">
+      <div class="glass p-4 text-center rounded-2xl"><div class="text-2xl mb-1">🚚</div>Free shipping</div>
+      <div class="glass p-4 text-center rounded-2xl"><div class="text-2xl mb-1">↩️</div>30-day returns</div>
+      <div class="glass p-4 text-center rounded-2xl"><div class="text-2xl mb-1">🔒</div>Secure checkout</div>
+    </div>
   </div>
 </section>
+
+{% if related %}
+<section class="px-6 max-w-7xl mx-auto py-16">
+  <h2 class="text-3xl font-bold font-[Space_Grotesk] mb-8">You may also like</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for p in related %}
+      {% include 'shop/partials/product_card.html' with product=p %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 {% endblock %}

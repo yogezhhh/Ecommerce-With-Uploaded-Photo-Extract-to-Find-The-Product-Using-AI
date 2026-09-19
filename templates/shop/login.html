@@ -1,0 +1,18 @@
+{# login.html #}
+{% extends 'shop/base.html' %}
+{% block content %}
+<section class="pt-32 pb-24 px-6 max-w-md mx-auto">
+  <div class="glass rounded-3xl p-8">
+    <h1 class="text-3xl font-bold font-[Space_Grotesk] mb-6 text-center">Welcome back</h1>
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      <input name="username" placeholder="Username" class="field" required>
+      <input name="password" type="password" placeholder="Password" class="field" required>
+      <button class="btn-primary w-full">Login</button>
+    </form>
+    <p class="text-center text-white/40 text-sm mt-6">
+      No account? <a href="/register/" class="text-cyan-400 hover:underline">Register</a>
+    </p>
+  </div>
+</section>
+{% endblock %}
